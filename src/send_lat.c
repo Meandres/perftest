@@ -205,6 +205,7 @@ int main(int argc, char *argv[])
 		goto return_error;
 	}
 
+	printf("ctx_find_dev\n");
 	/* Finding the IB device selected (or defalut if no selected). */
 	ib_dev = ctx_find_dev(&user_param.ib_devname);
 	if (!ib_dev) {
@@ -212,6 +213,7 @@ int main(int argc, char *argv[])
 		goto return_error;
 	}
 
+	printf("ctx_open_device\n");
 	/* Getting the relevant context from the device */
 	ctx.context = ctx_open_device(ib_dev, &user_param);
 	if (!ctx.context) {
