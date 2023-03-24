@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
 		goto return_error;
 	}
 
-	printf("ctx_open_device\n");
+	printf("ctx_open_device : %s, %s\n", ib_dev->name, ib_dev->dev_name);
 	/* Getting the relevant context from the device */
 	ctx.context = ctx_open_device(ib_dev, &user_param);
 	if (!ctx.context) {
