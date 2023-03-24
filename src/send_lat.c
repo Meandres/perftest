@@ -220,6 +220,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, " Couldn't get context for the device\n");
 		goto free_devname;
 	}
+	printf("After ctx_open_device\n");
 
 	/* Verify user parameters that require the device context,
 	 * the function will print the relevent error info. */
