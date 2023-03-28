@@ -243,7 +243,6 @@ int main(int argc, char *argv[])
 		printf("************************************\n");
 	}
 
-	printf("Establish connection\n");
 	/* Initialize the connection and print the local data. */
 	if (establish_connection(&user_comm)) {
 		fprintf(stderr," Unable to init the socket connection\n");
@@ -292,7 +291,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	printf("Set up connection\n");
 	/* Set up the Connection. */
 	if (send_set_up_connection(&ctx,&user_param,my_dest,&mcg_params,&user_comm)) {
 		fprintf(stderr," Unable to set up socket connection\n");
@@ -301,7 +299,6 @@ int main(int argc, char *argv[])
 
 	/* Print basic test information. */
 	ctx_print_test_info(&user_param);
-	printf("Start of exchange\n");
 
 	for (i=0; i < user_param.num_of_qps; i++) {
 
