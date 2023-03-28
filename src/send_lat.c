@@ -205,7 +205,6 @@ int main(int argc, char *argv[])
 		goto return_error;
 	}
 
-	printf("ctx_find_dev\n");
 	/* Finding the IB device selected (or defalut if no selected). */
 	ib_dev = ctx_find_dev(&user_param.ib_devname);
 	if (!ib_dev) {
@@ -213,14 +212,12 @@ int main(int argc, char *argv[])
 		goto return_error;
 	}
 
-	printf("ctx_open_device : %s, %s\n", ib_dev->name, ib_dev->dev_name);
 	/* Getting the relevant context from the device */
 	ctx.context = ctx_open_device(ib_dev, &user_param);
 	if (!ctx.context) {
 		fprintf(stderr, " Couldn't get context for the device\n");
 		goto free_devname;
 	}
-	printf("After ctx_open_device\n");
 
 	/* Verify user parameters that require the device context,
 	 * the function will print the relevent error info. */
@@ -246,6 +243,7 @@ int main(int argc, char *argv[])
 		printf("************************************\n");
 	}
 
+	printf("Establish connection\n");
 	/* Initialize the connection and print the local data. */
 	if (establish_connection(&user_comm)) {
 		fprintf(stderr," Unable to init the socket connection\n");
@@ -294,6 +292,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	printf("Set up connection\n");
 	/* Set up the Connection. */
 	if (send_set_up_connection(&ctx,&user_param,my_dest,&mcg_params,&user_comm)) {
 		fprintf(stderr," Unable to set up socket connection\n");
@@ -302,6 +301,7 @@ int main(int argc, char *argv[])
 
 	/* Print basic test information. */
 	ctx_print_test_info(&user_param);
+	printf("Start of exchange\n");
 
 	for (i=0; i < user_param.num_of_qps; i++) {
 
