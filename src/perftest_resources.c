@@ -2412,7 +2412,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		return SUCCESS;
 
 	for (i=0; i < user_param->num_of_qps; i++) {
-		printf("create_qp_main\n");
 		if (create_qp_main(ctx, user_param, i)) {
 			fprintf(stderr, "Failed to create QP.\n");
 			goto qps;
@@ -2548,6 +2547,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 {
 	struct ibv_qp* qp = NULL;
 	int dc_num_of_qps = user_param->num_of_qps / 2;
+	printf("In ctx_qp_create\n");
 
 	int is_dc_server_side = 0;
 	struct ibv_qp_init_attr attr;
