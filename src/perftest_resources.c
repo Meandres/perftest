@@ -2240,7 +2240,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 			return FAILURE;
 		}
 	}
-	printf("after ibv_create_comp_channel\n");
 
 	/* Allocating the Protection domain. */
 	ctx->pd = ibv_alloc_pd(ctx->context);
@@ -2345,11 +2344,13 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		goto mkey;
 	}
 
+	printf("after create_mr\n");
 	if (create_cqs(ctx, user_param)) {
 		fprintf(stderr, "Failed to create CQs\n");
 		goto mr;
 
 	}
+	printf("after create_cqs\n");
 
 	#ifdef HAVE_XRCD
 	if (user_param->use_xrc) {
