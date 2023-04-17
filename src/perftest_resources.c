@@ -2364,7 +2364,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		}
 	}
 	#endif
-	printf("after xrcd\n");
 
 	if (user_param->use_srq && user_param->connection_type == DC &&
 			(user_param->tst == LAT ||
@@ -2379,7 +2378,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		attr.pd = ctx->pd;
 
 		attr.srq_type = IBV_SRQT_BASIC;
-		printf("ibv_create_srq_ex\n");
 		ctx->srq = ibv_create_srq_ex(ctx->context, &attr);
 		if (!ctx->srq)  {
 			fprintf(stderr, "Couldn't create SRQ\n");
@@ -2398,7 +2396,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 				.max_sge = 1
 			}
 		};
-		printf("ibv_create_srq\n");
 		ctx->srq = ibv_create_srq(ctx->pd, &attr);
 		if (!ctx->srq)  {
 			fprintf(stderr, "Couldn't create SRQ\n");
@@ -2411,12 +2408,11 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 	* Unless, the function called with RDMA CM connection contexts,
 	* need to verify the call with the existence of ctx->cm_id.
 	*/
-	printf("before return Success\n");
 	if (!(user_param->work_rdma_cm == OFF || ctx->cm_id))
 		return SUCCESS;
 
-	printf("after return Success\n");
 	for (i=0; i < user_param->num_of_qps; i++) {
+		printf("create_qp_main\n");
 		if (create_qp_main(ctx, user_param, i)) {
 			fprintf(stderr, "Failed to create QP.\n");
 			goto qps;
