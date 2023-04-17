@@ -2547,7 +2547,6 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 {
 	struct ibv_qp* qp = NULL;
 	int dc_num_of_qps = user_param->num_of_qps / 2;
-	printf("In ctx_qp_create\n");
 
 	int is_dc_server_side = 0;
 	struct ibv_qp_init_attr attr;
@@ -2731,7 +2730,9 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		}
 		else
 		#endif // HAVE_IBV_WR_API
+			printf("Before ibv_create_qp\n");
 			qp = ibv_create_qp(ctx->pd, &attr);
+			printf("After ibv_create_qp\n");
 	}
 
 	if (qp == NULL && errno == ENOMEM) {
@@ -2745,8 +2746,8 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	#endif
 
 	if (user_param->inline_size > qp_cap->max_inline_data) {
-		printf("  Actual inline-size(%d) < requested inline-size(%d)\n",
-			qp_cap->max_inline_data, user_param->inline_size);
+		/*printf("  Actual inline-size(%d) < requested inline-size(%d)\n",
+			qp_cap->max_inline_data, user_param->inline_size);*/
 		user_param->inline_size = qp_cap->max_inline_data;
 	}
 
