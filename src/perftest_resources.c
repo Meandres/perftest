@@ -2230,6 +2230,7 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 	}
 	#endif
 	ctx->is_contig_supported = FAILURE;
+	printf("ctx_init start\n");
 
 	/* Allocating an event channel if requested. */
 	if (user_param->use_event) {
@@ -2239,6 +2240,7 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 			return FAILURE;
 		}
 	}
+	printf("after ibv_create_comp_channel\n");
 
 	/* Allocating the Protection domain. */
 	ctx->pd = ibv_alloc_pd(ctx->context);
