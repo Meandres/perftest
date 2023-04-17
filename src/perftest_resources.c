@@ -2377,6 +2377,7 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		attr.pd = ctx->pd;
 
 		attr.srq_type = IBV_SRQT_BASIC;
+		printf("ibv_create_srq_ex\n");
 		ctx->srq = ibv_create_srq_ex(ctx->context, &attr);
 		if (!ctx->srq)  {
 			fprintf(stderr, "Couldn't create SRQ\n");
@@ -2395,6 +2396,7 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 				.max_sge = 1
 			}
 		};
+		printf("ibv_create_srq\n");
 		ctx->srq = ibv_create_srq(ctx->pd, &attr);
 		if (!ctx->srq)  {
 			fprintf(stderr, "Couldn't create SRQ\n");

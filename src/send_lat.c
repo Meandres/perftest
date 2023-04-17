@@ -250,12 +250,10 @@ int main(int argc, char *argv[])
 		goto free_devname;
 	}
 
-	printf("exchange_versions\n");
 	exchange_versions(&user_comm, &user_param);
 	check_version_compatibility(&user_param);
 	check_sys_data(&user_comm, &user_param);
 
-	printf("check_mtu\n");
 	/* See if MTU is valid and supported. */
 	if (check_mtu(ctx.context,&user_param, &user_comm)) {
 		fprintf(stderr, " Couldn't get context for the device\n");
@@ -268,7 +266,6 @@ int main(int argc, char *argv[])
 	MAIN_ALLOC(rem_dest , struct pingpong_dest , user_param.num_of_qps , free_my_dest);
 	memset(rem_dest, 0, sizeof(struct pingpong_dest)*user_param.num_of_qps);
 
-	printf("alloc_ctx\n");
 	/* Allocating arrays needed for the test. */
 	if(alloc_ctx(&ctx,&user_param)){
 		fprintf(stderr, "Couldn't allocate context\n");
@@ -285,10 +282,8 @@ int main(int argc, char *argv[])
 			dealloc_ctx(&ctx, &user_param);
 			goto free_mem;
 		}
-		printf("create_rmda_cm_connection\n");
 	} else {
 		/* create all the basic IB resources (data buffer, PD, MR, CQ and events channel) */
-		printf("ctx_init\n");
 		if (ctx_init(&ctx, &user_param)) {
 			fprintf(stderr, " Couldn't create IB resources\n");
 			dealloc_ctx(&ctx, &user_param);
@@ -296,7 +291,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	printf("send_set_up_connection\n");
 	/* Set up the Connection. */
 	if (send_set_up_connection(&ctx,&user_param,my_dest,&mcg_params,&user_comm)) {
 		fprintf(stderr," Unable to set up socket connection\n");
