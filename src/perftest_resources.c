@@ -2230,7 +2230,6 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 	}
 	#endif
 	ctx->is_contig_supported = FAILURE;
-	printf("ctx_init start\n");
 
 	/* Allocating an event channel if requested. */
 	if (user_param->use_event) {
@@ -2730,9 +2729,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		}
 		else
 		#endif // HAVE_IBV_WR_API
-			printf("Before ibv_create_qp\n");
 			qp = ibv_create_qp(ctx->pd, &attr);
-			printf("After ibv_create_qp\n");
 	}
 
 	if (qp == NULL && errno == ENOMEM) {
