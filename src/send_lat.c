@@ -206,7 +206,6 @@ int main(int argc, char *argv[])
 	}
 
 	/* Finding the IB device selected (or defalut if no selected). */
-	printf("ctx_find_dev\n");
 	ib_dev = ctx_find_dev(&user_param.ib_devname);
 	if (!ib_dev) {
 		fprintf(stderr," Unable to find the Infiniband/RoCE device\n");
@@ -214,7 +213,6 @@ int main(int argc, char *argv[])
 	}
 
 	/* Getting the relevant context from the device */
-	printf("ctx_open_device\n");
 	ctx.context = ctx_open_device(ib_dev, &user_param);
 	if (!ctx.context) {
 		fprintf(stderr, " Couldn't get context for the device\n");
@@ -228,14 +226,12 @@ int main(int argc, char *argv[])
 	}
 
 	/* See if link type is valid and supported. */
-	printf("check_link\n");
 	if (check_link(ctx.context,&user_param)) {
 		fprintf(stderr, " Couldn't get context for the device\n");
 		goto free_devname;
 	}
 
 	/* copy the relevant user parameters to the comm struct + creating rdma_cm resources. */
-	printf("create_comm_struct\n");
 	if (create_comm_struct(&user_comm,&user_param)) {
 		fprintf(stderr," Unable to create RDMA_CM resources\n");
 		goto free_devname;
@@ -255,6 +251,7 @@ int main(int argc, char *argv[])
 		goto free_devname;
 	}
 
+	printf("After establish_connection\n");
 	exchange_versions(&user_comm, &user_param);
 	check_version_compatibility(&user_param);
 	check_sys_data(&user_comm, &user_param);
