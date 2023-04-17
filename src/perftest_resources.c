@@ -2344,13 +2344,11 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		goto mkey;
 	}
 
-	printf("after create_mr\n");
 	if (create_cqs(ctx, user_param)) {
 		fprintf(stderr, "Failed to create CQs\n");
 		goto mr;
 
 	}
-	printf("after create_cqs\n");
 
 	#ifdef HAVE_XRCD
 	if (user_param->use_xrc) {
@@ -2366,6 +2364,7 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 		}
 	}
 	#endif
+	printf("after xrcd\n");
 
 	if (user_param->use_srq && user_param->connection_type == DC &&
 			(user_param->tst == LAT ||
@@ -2412,9 +2411,11 @@ int ctx_init(struct pingpong_context *ctx, struct perftest_parameters *user_para
 	* Unless, the function called with RDMA CM connection contexts,
 	* need to verify the call with the existence of ctx->cm_id.
 	*/
+	printf("before return Success\n");
 	if (!(user_param->work_rdma_cm == OFF || ctx->cm_id))
 		return SUCCESS;
 
+	printf("after return Success\n");
 	for (i=0; i < user_param->num_of_qps; i++) {
 		if (create_qp_main(ctx, user_param, i)) {
 			fprintf(stderr, "Failed to create QP.\n");
