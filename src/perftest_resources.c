@@ -2748,7 +2748,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		user_param->inline_size = qp_cap->max_inline_data;
 	}
 	if(qp == NULL){
-		printf("QP is null");
+		printf("QP is null\n");
 	}else{
 		printf("Pointer to the kernel qp : %p\n", qp->k_qp);
 	}	
