@@ -2747,6 +2747,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 			qp_cap->max_inline_data, user_param->inline_size);*/
 		user_param->inline_size = qp_cap->max_inline_data;
 	}
+	printf("Pointer to the kernel qp : %p\n", qp->k_qp);
 
 	return qp;
 }
