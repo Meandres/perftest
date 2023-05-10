@@ -4935,6 +4935,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 	int			send_flows_index = 0;
 	int			recv_flows_index = 0;
 	cycles_t 		end_cycle, start_gap;
+	cycles_t        start, c1, c2, c3, c4, c5, end;
 	uintptr_t		primary_send_addr = ctx->sge_list[0].addr;
 	uintptr_t		primary_recv_addr = ctx->recv_sge_list[0].addr;
 
@@ -4958,6 +4959,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 		 * his first packet (scnt < 1)
 		 * server will enter here first and wait for a packet to arrive (from the client)
 		 */
+		start = get_cycles();
 		if ((rcnt < user_param->iters || user_param->test_type == DURATION) && !(scnt < 1 && user_param->machine == CLIENT)) {
 			if (user_param->use_event) {
 				if (ctx_notify_events(ctx->channel)) {
@@ -5019,7 +5021,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 				}
 			} while (!user_param->use_event && ne == 0);
 		}
-
+		c1 = get_cycles();
 		if (scnt < user_param->iters || (user_param->test_type == DURATION && user_param->state != END_STATE)) {
 
 			if (user_param->latency_gap) {
@@ -5043,10 +5045,10 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 			/* if we're in duration mode and the time is over, exit from this function */
 			if (user_param->test_type == DURATION && user_param->state == END_STATE)
 				break;
-
+			c2 = get_cycles();
 			/* send the packet that's in index 0 on the buffer */
 			err = post_send_method(ctx, 0, user_param);
-
+			c3 = get_cycles();
 			if (err) {
 				fprintf(stderr,"Couldn't post send: scnt=%lu \n",scnt);
 				return 1;
@@ -5070,12 +5072,12 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 						return FAILURE;
 					}
 				}
-
+				c4 = get_cycles();
 				/* wait until you get a cq for the last packet */
 				do {
 					s_ne = ibv_poll_cq(ctx->send_cq, 1, &s_wc);
 				} while (!user_param->use_event && s_ne == 0);
-
+				c5 = get_cycles();
 				if (s_ne < 0) {
 					fprintf(stderr, "poll on Send CQ failed %d\n", s_ne);
 					return FAILURE;
@@ -5090,6 +5092,8 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 				ctx->wr[0].send_flags &= ~IBV_SEND_SIGNALED;
 			}
 		}
+		end = get_cycles();
+		printf("%llu, %llu, %llu, %llu, %llu, %llu\n", c1-start, c2-c1, c3-c2, c4-c3, c5-c4, end-c5);
 	}
 
 	return 0;
