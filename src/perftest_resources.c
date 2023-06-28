@@ -4953,6 +4953,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 	}
 	while (scnt < user_param->iters || rcnt < user_param->iters ||
 			( (user_param->test_type == DURATION && user_param->state != END_STATE))) {
+		printf("scnt : %i, rcnt : %i\n", scnt, rcnt);
 
 		/*
 		 * Get the received packet. make sure that the client won't enter here until he sends
