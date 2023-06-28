@@ -3820,7 +3820,6 @@ void print_report_lat (struct perftest_parameters *user_param)
 
 	measure_cnt = (user_param->tst == LAT) ? user_param->iters - 1 : (user_param->iters) / user_param->reply_every;
 	rtt_factor = (user_param->verb == READ || user_param->verb == ATOMIC) ? 1 : 2;
-	printf("measure_cnt : %i\n", measure_cnt);
 	ALLOCATE(delta, cycles_t, measure_cnt);
 
 	if (user_param->r_flag->cycles) {
