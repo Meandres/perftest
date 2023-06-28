@@ -5082,7 +5082,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 					fprintf(stderr, "poll on Send CQ failed %d\n", s_ne);
 					return FAILURE;
 				}
-
+				printf("Should be able to access wc : %i\n", s_wc.status);	
 				if (s_wc.status != IBV_WC_SUCCESS) {
 					//coverity[uninit_use_in_call]
 					NOTIFY_COMP_ERROR_SEND(s_wc,scnt,scnt)
