@@ -5082,7 +5082,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 					fprintf(stderr, "poll on Send CQ failed %d\n", s_ne);
 					return FAILURE;
 				}
-				printf("Should be able to access wc : %i\n", s_wc.status);	
+				printf("Should be able to access wc : %i IBV_WC_SUCCESS : %i\n", s_wc.status, IBV_WC_SUCCESS);	
 				if (s_wc.status != IBV_WC_SUCCESS) {
 					//coverity[uninit_use_in_call]
 					NOTIFY_COMP_ERROR_SEND(s_wc,scnt,scnt)
@@ -5091,6 +5091,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 				poll = 0;
 				ctx->wr[0].send_flags &= ~IBV_SEND_SIGNALED;
 			}
+			printf("Breaking out of the poll_cq loop\n");
 		}
 		//end = get_cycles();
 		//printf("%llu, %llu, %llu, %llu, %llu, %llu\n", c1-start, c2-c1, c3-c2, c4-c3, c5-c4, end-c5);
