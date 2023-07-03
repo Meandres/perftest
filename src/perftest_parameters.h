@@ -133,21 +133,21 @@
 #define DISABLED_CQ_MOD_VALUE    (1)
 #define MSG_SIZE_CQ_MOD_LIMIT (8192)
 
-/* Optimal Values for Inline 
+/* Optimal Values for Inline */
 #define DEF_INLINE_WRITE (220)
 #define DEF_INLINE_SEND_RC_UC (236)
 #define DEF_INLINE_SEND_XRC (236)
 #define DEF_INLINE_SEND_UD (188)
 #define DEF_INLINE_DC (150)
-#define DEF_INLINE_SEND_RC_UC_XRC (236)*/
+#define DEF_INLINE_SEND_RC_UC_XRC (236)
 
-/* Values to turn off inlining */
+/* Values to turn off inlining
 #define DEF_INLINE_WRITE (0)
 #define DEF_INLINE_SEND_RC_UC (0)
 #define DEF_INLINE_SEND_XRC (0)
 #define DEF_INLINE_SEND_UD (0)
 #define DEF_INLINE_DC (0)
-#define DEF_INLINE_SEND_RC_UC_XRC (0) 
+#define DEF_INLINE_SEND_RC_UC_XRC (0) */
 
 /* AES-XTS Values */
 #define AES_XTS_TWEAK_SIZE (16)
