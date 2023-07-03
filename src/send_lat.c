@@ -282,6 +282,7 @@ int main(int argc, char *argv[])
 	printf("inline_size 8 : %i\n", user_param.inline_size);
 	/* Create RDMA CM resources and connect through CM. */
 	if (user_param.work_rdma_cm == ON) {
+		printf("rdma\n");
 		rc = create_rdma_cm_connection(&ctx, &user_param, &user_comm,
 			my_dest, rem_dest);
 		if (rc) {
@@ -291,6 +292,7 @@ int main(int argc, char *argv[])
 			goto free_mem;
 		}
 	} else {
+		printf("other\n");
 		/* create all the basic IB resources (data buffer, PD, MR, CQ and events channel) */
 		if (ctx_init(&ctx, &user_param)) {
 			fprintf(stderr, " Couldn't create IB resources\n");
