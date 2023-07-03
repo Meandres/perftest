@@ -230,7 +230,6 @@ int main(int argc, char *argv[])
 		fprintf(stderr, " Couldn't get context for the device\n");
 		goto free_devname;
 	}
-	printf("inline_size 1 : %i\n", user_param.inline_size);
 
 	/* copy the relevant user parameters to the comm struct + creating rdma_cm resources. */
 	if (create_comm_struct(&user_comm,&user_param)) {
@@ -238,51 +237,43 @@ int main(int argc, char *argv[])
 		goto free_devname;
 	}
 
-	printf("inline_size 2 : %i\n", user_param.inline_size);
 	if (user_param.output == FULL_VERBOSITY && user_param.machine == SERVER) {
 		printf("\n************************************\n");
 		printf("* Waiting for client to connect... *\n");
 		printf("************************************\n");
 	}
 
-	printf("inline_size 3 : %i\n", user_param.inline_size);
 	/* Initialize the connection and print the local data. */
 	if (establish_connection(&user_comm)) {
 		fprintf(stderr," Unable to init the socket connection\n");
 		dealloc_comm_struct(&user_comm,&user_param);
 		goto free_devname;
 	}
-	printf("inline_size 4 : %i\n", user_param.inline_size);
 
 	exchange_versions(&user_comm, &user_param);
 	check_version_compatibility(&user_param);
 	check_sys_data(&user_comm, &user_param);
 
-	printf("inline_size 5 : %i\n", user_param.inline_size);
 	/* See if MTU is valid and supported. */
 	if (check_mtu(ctx.context,&user_param, &user_comm)) {
 		fprintf(stderr, " Couldn't get context for the device\n");
 		dealloc_comm_struct(&user_comm,&user_param);
 		return FAILURE;
 	}
-	printf("inline_size 6 : %i\n", user_param.inline_size);
 
 	MAIN_ALLOC(my_dest , struct pingpong_dest , user_param.num_of_qps , free_rdma_params);
 	memset(my_dest, 0, sizeof(struct pingpong_dest)*user_param.num_of_qps);
 	MAIN_ALLOC(rem_dest , struct pingpong_dest , user_param.num_of_qps , free_my_dest);
 	memset(rem_dest, 0, sizeof(struct pingpong_dest)*user_param.num_of_qps);
 
-	printf("inline_size 7 : %i\n", user_param.inline_size);
 	/* Allocating arrays needed for the test. */
 	if(alloc_ctx(&ctx,&user_param)){
 		fprintf(stderr, "Couldn't allocate context\n");
 		goto free_mem;
 	}
 
-	printf("inline_size 8 : %i\n", user_param.inline_size);
 	/* Create RDMA CM resources and connect through CM. */
 	if (user_param.work_rdma_cm == ON) {
-		printf("rdma\n");
 		rc = create_rdma_cm_connection(&ctx, &user_param, &user_comm,
 			my_dest, rem_dest);
 		if (rc) {
@@ -292,7 +283,6 @@ int main(int argc, char *argv[])
 			goto free_mem;
 		}
 	} else {
-		printf("other\n");
 		/* create all the basic IB resources (data buffer, PD, MR, CQ and events channel) */
 		if (ctx_init(&ctx, &user_param)) {
 			fprintf(stderr, " Couldn't create IB resources\n");
@@ -301,7 +291,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	printf("inline_size 9 : %i\n", user_param.inline_size);
 	/* Set up the Connection. */
 	if (send_set_up_connection(&ctx,&user_param,my_dest,&mcg_params,&user_comm)) {
 		fprintf(stderr," Unable to set up socket connection\n");
@@ -311,7 +300,6 @@ int main(int argc, char *argv[])
 	/* Print basic test information. */
 	ctx_print_test_info(&user_param);
 
-	printf("inline_size 10 : %i\n", user_param.inline_size);
 	for (i=0; i < user_param.num_of_qps; i++) {
 
 		/* shaking hands and gather the other side info. */
