@@ -2739,8 +2739,10 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	}
 
 	#ifdef HAVE_IBV_WR_API
-	if (!user_param->use_old_post_send)
+	if (!user_param->use_old_post_send){
+		printf("setting qp_cap\n");
 		qp_cap = &attr_ex.cap;
+	}
 	#endif
 
 	if (user_param->inline_size > qp_cap->max_inline_data) {
