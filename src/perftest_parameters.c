@@ -2110,6 +2110,7 @@ static void ctx_set_max_inline(struct ibv_context *context,struct perftest_param
 			user_param->inline_size = 0;
 		}
 	}
+	printf("Setting inline_size to %i\n", user_param->inline_size);
 
 	return;
 }
