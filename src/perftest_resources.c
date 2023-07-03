@@ -2643,6 +2643,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	attr_ex.qp_type = attr.qp_type;
 	attr_ex.srq = attr.srq;
 	attr_ex.cap.max_inline_data = attr.cap.max_inline_data;
+	printf("setting max_inline_data to the inline requested\n");
 	attr_ex.cap.max_recv_wr  = attr.cap.max_recv_wr;
 	attr_ex.cap.max_recv_sge = attr.cap.max_recv_sge;
 	#endif
