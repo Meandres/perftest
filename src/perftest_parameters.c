@@ -2088,11 +2088,8 @@ static void ctx_set_max_inline(struct ibv_context *context,struct perftest_param
 			switch(user_param->verb) {
 				case WRITE: user_param->inline_size = (user_param->connection_type == DC)? DEF_INLINE_DC : DEF_INLINE_WRITE;break;
 				case SEND : user_param->inline_size = (user_param->connection_type == DC)? DEF_INLINE_DC : (user_param->connection_type == UD)? DEF_INLINE_SEND_UD :
-					    DEF_INLINE_SEND_RC_UC_XRC ;
-					printf("tst = LAT, verb = SEND, inline : %i\n", DEF_INLINE_SEND_RC_UC_XRC);
-					break;
+					    DEF_INLINE_SEND_RC_UC_XRC ;break;
 				default   : user_param->inline_size = 0;
-					printf("tst = LAT, verb = default\n");
 			}
 			if (current_dev == NETXTREME)
 				user_param->inline_size = 96;
@@ -2113,7 +2110,6 @@ static void ctx_set_max_inline(struct ibv_context *context,struct perftest_param
 			user_param->inline_size = 0;
 		}
 	}
-	printf("Setting inline_size to %i\n", user_param->inline_size);
 
 	return;
 }

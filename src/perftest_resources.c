@@ -2643,7 +2643,6 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	attr_ex.qp_type = attr.qp_type;
 	attr_ex.srq = attr.srq;
 	attr_ex.cap.max_inline_data = attr.cap.max_inline_data;
-	printf("setting max_inline_data to the inline requested : %i\n", attr_ex.cap.max_inline_data);
 	attr_ex.cap.max_recv_wr  = attr.cap.max_recv_wr;
 	attr_ex.cap.max_recv_sge = attr.cap.max_recv_sge;
 	#endif
@@ -2745,8 +2744,6 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	#endif
 
 	if (user_param->inline_size > qp_cap->max_inline_data) {
-		printf("Actual inline-size(%d) < requested inline-size(%d)\n",
-			qp_cap->max_inline_data, user_param->inline_size);
 		user_param->inline_size = qp_cap->max_inline_data;
 	}
 	/*if(qp == NULL){
@@ -3406,7 +3403,6 @@ void ctx_set_send_reg_wqes(struct pingpong_context *ctx,
 					ctx->wr[i*user_param->post_list + j].wr.ud.remote_qpn = ctx->rem_qpn[xrc_offset + i];
 				}
 			}
-			printf("ctx_set_send_wqes, size : %i, inline_size : %i\n", user_param->size, user_param->inline_size);
 			if ((user_param->verb == SEND || user_param->verb == WRITE) && user_param->size <= user_param->inline_size)
 				ctx->wr[i*user_param->post_list + j].send_flags |= IBV_SEND_INLINE;
 
@@ -4949,7 +4945,6 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 		ctx->wr[0].sg_list->length = user_param->size;
 		ctx->wr[0].send_flags = 0;
 	}
-	printf("run_iter_lat_send; size : %i, inline_size : %i\n", user_param->size, user_param->inline_size);
 	if (user_param->size <= user_param->inline_size) {
 		ctx->wr[0].send_flags |= IBV_SEND_INLINE;
 	}
