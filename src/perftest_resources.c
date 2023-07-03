@@ -4947,6 +4947,7 @@ int run_iter_lat_send(struct pingpong_context *ctx,struct perftest_parameters *u
 		ctx->wr[0].sg_list->length = user_param->size;
 		ctx->wr[0].send_flags = 0;
 	}
+	printf("run_iter_lat_send; size : %i, inline_size : %i\n", user_param->size, user_param->inline_size);
 	if (user_param->size <= user_param->inline_size) {
 		ctx->wr[0].send_flags |= IBV_SEND_INLINE;
 	}
