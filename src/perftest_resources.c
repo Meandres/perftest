@@ -3404,7 +3404,7 @@ void ctx_set_send_reg_wqes(struct pingpong_context *ctx,
 					ctx->wr[i*user_param->post_list + j].wr.ud.remote_qpn = ctx->rem_qpn[xrc_offset + i];
 				}
 			}
-
+			printf("ctx_set_send_wqes, size : %i, inline_size : %i\n", user_param->size, user_param->inline_size);
 			if ((user_param->verb == SEND || user_param->verb == WRITE) && user_param->size <= user_param->inline_size)
 				ctx->wr[i*user_param->post_list + j].send_flags |= IBV_SEND_INLINE;
 

@@ -230,6 +230,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, " Couldn't get context for the device\n");
 		goto free_devname;
 	}
+	printf("inline_size : %i\n", user_param.inline_size);
 
 	/* copy the relevant user parameters to the comm struct + creating rdma_cm resources. */
 	if (create_comm_struct(&user_comm,&user_param)) {
